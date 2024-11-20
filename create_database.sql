@@ -75,6 +75,14 @@ INSERT INTO student (name, age, gradeLevel, enrollmentDate) VALUES
 ('Ella', 16, '10th', '2022-09-01'),
 ('Alma', 14, '8th', '2023-09-01');
 
+INSERT INTO class (name, schedule, teacherId, subjectId)
+VALUES
+    ('Mathematics 101', 'Mon 10:00 AM', 1, 1),  -- Class for Mathematics (subject_id = 1) with Teacher 1
+    ('Mathematics 102', 'Wed 2:00 PM', 2, 1),  -- Another class for Mathematics (subject_id = 1) with Teacher 2
+    ('English 101', 'Tue 9:00 AM', 3, 2),      -- Class for English (subject_id = 2) with Teacher 3
+    ('History 101', 'Fri 1:00 PM', 4, 3),      -- Class for History (subject_id = 3) with Teacher 4
+    ('Science 101', 'Mon 12:00 PM', 5, 4);     -- Class for Biology (subject_id = 4) with Teacher 5
+
 
 INSERT INTO grade (studentId, classId, grade, date) VALUES
 (1, 1, 'A', '2024-11-01'), -- Elin in Algebra 101
@@ -84,6 +92,22 @@ INSERT INTO grade (studentId, classId, grade, date) VALUES
 (4, 5, 'B', '2024-11-05'), -- Oscar in Painting Basics
 (5, 1, 'C', '2024-11-01'), -- Astrid in Algebra 101
 (5, 2, 'B', '2024-11-02'); -- Astrid in Biology 201
+
+-- Create a view where we more easily can retrieve students grades
+CREATE VIEW StudentGrades AS
+SELECT
+    s.studentId AS StudentID,
+    s.name AS StudentName,
+    c.name AS ClassName,
+    g.grade AS Grade,
+    g.date AS GradeDate
+FROM
+    grade g
+JOIN student s ON g.studentId = s.studentId
+JOIN class c ON g.classId = c.classId;
+
+-- Retrieve the data from the view we created before
+SELECT * FROM StudentGrades;
 
 -- Removes the entire database
 DROP DATABASE schoolManagement;
