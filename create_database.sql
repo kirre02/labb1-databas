@@ -93,6 +93,20 @@ INSERT INTO grade (studentId, classId, grade, date) VALUES
 (5, 1, 'C', '2024-11-01'), -- Astrid in Algebra 101
 (5, 2, 'B', '2024-11-02'); -- Astrid in Biology 201
 
+
+-- In this query we will grab the classes with the teacher that will lead each class
+SELECT
+    c.classId AS ClassID,
+    c.name AS ClassName,
+    c.schedule as Schedule,
+    t.name AS TeacherName,
+    s.name AS SubjectName
+FROM
+    class c
+INNER JOIN teacher t ON c.teacherId = t.teacherId
+INNER JOIN subject s ON c.subjectId = s.subjectId
+ORDER BY schedule;
+
 -- Create a view where we more easily can retrieve students grades
 CREATE VIEW StudentGrades AS
 SELECT
